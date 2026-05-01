@@ -9,7 +9,7 @@ const CartItem = ({ item }) => {
     const dispatch = useDispatch()
     const handleRemoveFromCart = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/cart/remove/${item.id}`, {
+            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/remove/${item.id}`, {
                 method: "DELETE",
                 credentials: 'include'
             })
@@ -31,7 +31,7 @@ const CartItem = ({ item }) => {
     }
     const handleIncrement = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/cart/increment/${item.id}`, {
+            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/increment/${item.id}`, {
                 method: "POST",
                 credentials: 'include'
             })
@@ -53,7 +53,7 @@ const CartItem = ({ item }) => {
     }
     const handleDecrement = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/cart/decrement/${item.id}`, {
+            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/decrement/${item.id}`, {
                 method: "POST",
                 credentials: 'include'
             })

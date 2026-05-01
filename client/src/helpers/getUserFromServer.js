@@ -1,5 +1,5 @@
 const getUserFromServer = async() =>{
-    const res = await fetch(`http://localhost:3000/api/auth/user`,{
+    const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/auth/user`,{
         credentials:'include'
     })
     const data = await res.json()

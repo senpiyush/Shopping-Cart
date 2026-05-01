@@ -10,7 +10,7 @@ const Success = ({getUser}) => {
  
   const clearCart = async() =>{
     
-    const res = await fetch(`http://localhost:3000/api/cart/clear`,{
+    const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/clear`,{
       credentials:'include'
     })
     const data = await res.json()

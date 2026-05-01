@@ -12,7 +12,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    const res = await fetch(`http://localhost:3000/api/auth/logout`, {
+    const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/auth/logout`, {
       credentials: 'include',
     });
     const data = await res.json();

@@ -14,7 +14,7 @@ const Cart = () => {
   const orderNow = async () => {
     try {
       setLoading(true)
-      const res = await fetch(`http://localhost:3000/api/cart/checkout`, {
+      const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/checkout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
