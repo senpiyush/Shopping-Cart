@@ -22,7 +22,10 @@ app.use(cookieParser());
 
 // CORS (frontend Vite usually runs on 5173)
 app.use(cors({
-  origin: "http://localhost:5173",
+   origin: [
+    "http://localhost:5173",
+    "https://shopping-cart-client-ovdh.onrender.com"
+  ],
   credentials: true
 }));
 
