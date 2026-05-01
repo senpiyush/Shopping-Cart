@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import toast from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from '../components/Loader'
-import { addToCart } from '../app/slices/cartSlice'
+import { setCart } from '../app/slices/cartSlice'
 const ProductDetails = () => {
     const { id } = useParams()
     const [product, setProduct] = useState(null)
@@ -34,8 +34,53 @@ const ProductDetails = () => {
         fetchProduct()
     }, [id])
 
-   const handleAddToCart = async () => { const token = localStorage.getItem("token"); if (!token) { return toast.error("Please login first"); } const payload = { id: product.id, title: product.title, description: product.description, image: product.thumbnail, price: product.price, category: product.category }; try { const res = await fetch( "https://shopping-cart-backend-7wvv.onrender.com/api/cart/add", { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify(payload) } ); const data = await res.json(); if (data.success) { toast.success(data.message); navigate("/cart"); } else { toast.error(data.message); } } catch (error) { console.log(error); toast.error("Something went wrong"); } };
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
 
+    if (!token) {
+        return toast.error("Please login first");
+    }
+
+   const payload = {
+    id: product.id,
+    title: product.title,
+    description: product.description,
+    image: product.thumbnail,
+    price: product.price,
+    category: product.category,
+    quantity: quantity
+};
+
+    try {
+        const res = await fetch(
+            "https://shopping-cart-backend-7wvv.onrender.com/api/cart/add",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            }
+        );
+
+        const data = await res.json();
+
+        if (data.success) {
+   toast.success(data.message);
+
+   dispatch(setCart(data.cart));
+
+   navigate("/cart");
+} else {
+            toast.error(data.message);
+        }
+
+    } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong");
+    }
+};
     const renderStars = (rating) => {
         const stars = []
         const fullStars = Math.floor(rating)

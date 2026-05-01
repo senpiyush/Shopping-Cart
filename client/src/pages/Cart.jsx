@@ -12,29 +12,44 @@ const Cart = () => {
   const [loading, setLoading] = useState(false)
 
   const orderNow = async () => {
-    try {
-      setLoading(true)
-      const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/checkout`, {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return toast.error("Please login first");
+  }
+
+  try {
+    setLoading(true);
+
+    const res = await fetch(
+      `https://shopping-cart-backend-7wvv.onrender.com/api/cart/checkout`,
+      {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         },
-        credentials: 'include',
-        body: JSON.stringify({ items })
-      })
-
-      const data = await res.json()
-      if (data.success) {
-        window.location.href = data.url;
-      } else {
-        toast.error('Order failed: ' + data.message);
+        body: JSON.stringify({
+          items: items
+        })
       }
-    } catch (error) {
-      toast.error('Order failed: ' + error.message);
-    } finally {
-      setLoading(false)
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+      window.location.href = data.url;
+    } else {
+      toast.error("Order failed: " + data.message);
     }
+
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  } finally {
+    setLoading(false);
   }
+};
 
   if (!user) {
     return (

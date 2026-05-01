@@ -6,13 +6,19 @@ import { Trash } from 'lucide-react'
 
 
 const CartItem = ({ item }) => {
+    const token = localStorage.getItem("token");
     const dispatch = useDispatch()
     const handleRemoveFromCart = async () => {
         try {
-            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/remove/${item.id}`, {
-                method: "DELETE",
-                credentials: 'include'
-            })
+            const res = await fetch(
+  `https://shopping-cart-backend-7wvv.onrender.com/api/cart/remove/${item.id}`,
+  {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+)
             const data = await res.json()
 
             if (data.success) {
@@ -31,10 +37,15 @@ const CartItem = ({ item }) => {
     }
     const handleIncrement = async () => {
         try {
-            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/increment/${item.id}`, {
-                method: "POST",
-                credentials: 'include'
-            })
+            const res = await fetch(
+  `https://shopping-cart-backend-7wvv.onrender.com/api/cart/increment/${item.id}`,
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+)
             const data = await res.json()
 
             if (data.success) {
@@ -53,10 +64,15 @@ const CartItem = ({ item }) => {
     }
     const handleDecrement = async () => {
         try {
-            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/decrement/${item.id}`, {
-                method: "POST",
-                credentials: 'include'
-            })
+            const res = await fetch(
+  `https://shopping-cart-backend-7wvv.onrender.com/api/cart/decrement/${item.id}`,
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+)
             const data = await res.json()
 
             if (data.success) {
