@@ -41,6 +41,10 @@ const Login = ({getUser}) => {
       if(data.success){
         setFormData(initialData)
         toast.success(data.message)
+localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+
+
         getUser()
         navigate("/")
       }else{
