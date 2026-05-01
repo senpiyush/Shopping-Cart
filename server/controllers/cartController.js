@@ -2,7 +2,7 @@ const User = require("../models/user")
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 
 const addToCart = async (req, res) => {
-    const { id, title, description, image, price, category } = req.body
+    const { id, title, description, image, price, category, quantity } = req.body
     const userId = req.id
 
     try {
@@ -30,7 +30,7 @@ const addToCart = async (req, res) => {
             image,
             price,
             category,
-            quantity: 1,
+            quantity: quantity || 1,
         }
 
         user.cart.push(product)
@@ -38,10 +38,10 @@ const addToCart = async (req, res) => {
         await user.save()
 
         res.status(200).json({
-            success: true,
-            message: "Added to cart",
-
-        })
+   success: true,
+   message: "Added to cart",
+   cart: user.cart
+})
 
     } catch (error) {
         res.status(500).json({
