@@ -34,50 +34,7 @@ const ProductDetails = () => {
         fetchProduct()
     }, [id])
 
-    const handleAddToCart = async () => {
-        if (!user) {
-            return toast.error("You are not logged in.")
-        }
-
-        const payload = {
-            id: product.id, 
-            title: product.title, 
-            description: product.description, 
-            image: product.thumbnail, 
-            price: product.price, 
-            category: product.category
-        }
-        
-        try {
-            const res = await fetch(`https://shopping-cart-backend-7wvv.onrender.com/api/cart/add`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify(payload)
-            })
-            const data = await res.json()
-
-            if (data.success) {
-                toast.success(data.message)
-                dispatch(addToCart({
-                    id: product.id,
-                    title: product.title,
-                    description: product.description,
-                    image: product.thumbnail,
-                    price: product.price,
-
-                }))
-                navigate("/cart")
-            } else {
-                toast.error(data.message)
-            }
-        } catch (error) {
-            toast.error(error.message)
-            console.log(error)
-        }
-    }
+   const handleAddToCart = async () => { const token = localStorage.getItem("token"); if (!token) { return toast.error("Please login first"); } const payload = { id: product.id, title: product.title, description: product.description, image: product.thumbnail, price: product.price, category: product.category }; try { const res = await fetch( "https://shopping-cart-backend-7wvv.onrender.com/api/cart/add", { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify(payload) } ); const data = await res.json(); if (data.success) { toast.success(data.message); navigate("/cart"); } else { toast.error(data.message); } } catch (error) { console.log(error); toast.error("Something went wrong"); } };
 
     const renderStars = (rating) => {
         const stars = []

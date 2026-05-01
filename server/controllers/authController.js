@@ -77,12 +77,7 @@ const login = async(req,res) =>{
   process.env.JWT_SECRET,
   { expiresIn: "1h" }
 );
-        res.cookie("token", token, {
-  httpOnly: true,
-  secure: false,
-  sameSite: "lax",
-  expires: new Date(Date.now() + 3600000)
-});
+     
        
         res.status(200).json({
     success: true,
@@ -106,10 +101,11 @@ const login = async(req,res) =>{
 
 const logout = async(req,res) =>{
     try{
-        res.clearCookie("token", {
+      res.clearCookie("token", {
   httpOnly: true,
-  secure: false,
-  sameSite: "lax"
+  secure: true,
+  sameSite: "none",
+  path: "/"
 });
 
         res.status(200).json({
